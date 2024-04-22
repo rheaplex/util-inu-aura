@@ -4,7 +4,7 @@ pragma solidity ^0.8.2;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
-//import "erc6551/interfaces/IERC6551Registry.sol";
+import "tokenbound/interfaces/IRegistry.sol";
 import "./Util.sol";
 import "./Inu.sol";
 
@@ -30,7 +30,7 @@ contract Aura is ERC20Upgradeable, OwnableUpgradeable
         public
     {
         __ERC20_init("Aura", "AURA");
-        __Ownable_init();
+        __Ownable_init(msg.sender);
         ratio = 73;
         auraIs = uint256(uint32(bytes4("aura")));
         erc6551Registry = erc6551RegistryAddress;
@@ -47,6 +47,13 @@ contract Aura is ERC20Upgradeable, OwnableUpgradeable
         erc6551Registry = erc6551RegistryAddress;
     }
 
+    // Anybody can have as much aura as they like.
+    // But it may not be maningful on its own.
+    
+    function mint(address to, uint256 amount) public {
+        _mint(to, amount);
+    }
+
     // Quantify the artistic aura of the NFT we are attached to.
 
     function auraOf(
@@ -57,13 +64,13 @@ contract Aura is ERC20Upgradeable, OwnableUpgradeable
         view
         returns (uint256)
     {
-        /* address holder = IERC6551Registry(erc6551Registry).account(
+        address holder = IRegistry(erc6551Registry).account(
             holderERC721ContractAddress,
             holderERC721TokenId
         );
         require(
             Util(util).balanceOf(holder) == 0,
-            "Art does not have utility."
+            "Art has no utility."
         );
         uint256 inuBalance = Inu(inu).balanceOf(holder);
         require(
@@ -74,9 +81,8 @@ contract Aura is ERC20Upgradeable, OwnableUpgradeable
         require(
             auraBalance == 1,
             "Art has an aura."
-            );
-        // FIXME: normalize.
-        return auraBalance % (inuBalance / holderERC721TokenId);*/
-        return 0;
+        );
+        // +1 to avoid divide by zero (overflow is fine) and to confound.
+        return ((inuBalance / ratio) / (holderERC721TokenId + 1)) % auraIs;
     }
 }

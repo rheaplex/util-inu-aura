@@ -6,6 +6,8 @@ import "@openzeppelin/contracts/access/Ownable2Step.sol";
 contract CrossChainExecutorList is Ownable2Step {
     mapping(uint256 => mapping(address => bool)) public isCrossChainExecutor;
 
+    constructor () Ownable(msg.sender) {}
+
     /**
      * @dev Enables or disables a trusted cross-chain executor.
      *

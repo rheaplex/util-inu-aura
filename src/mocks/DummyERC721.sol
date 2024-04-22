@@ -7,15 +7,13 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract DummyERC721 is ERC721, Ownable {
-    uint256 private _nextTokenId;
 
     constructor(address initialOwner)
         ERC721("DummyERC721", "DMY")
         Ownable(initialOwner)
     {}
 
-    function safeMint(address to) public onlyOwner {
-        uint256 tokenId = _nextTokenId++;
-        _safeMint(to, tokenId);
+    function mint(address to, uint256 tokenId) public onlyOwner {
+        _mint(to, tokenId);
     }
 }

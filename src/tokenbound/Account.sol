@@ -17,7 +17,7 @@ import "./lib/MinimalProxyStore.sol";
  * @title A smart contract wallet owned by a single ERC721 token
  * @author Jayden Windle (jaydenwindle)
  */
-contract Account is IERC165, IERC1271, IAccount, MinimalReceiver {
+contract AccountV2 is IERC165, IERC1271, IAccount, MinimalReceiver {
     error NotAuthorized();
     error AccountLocked();
     error ExceedsMaxLockTime();
@@ -244,7 +244,7 @@ contract Account is IERC165, IERC1271, IAccount, MinimalReceiver {
         public
         view
         virtual
-        override(IERC165, ERC1155Receiver)
+        override(IERC165, ERC1155Holder)
         returns (bool)
     {
         // default interface support

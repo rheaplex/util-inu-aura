@@ -1,0 +1,29 @@
+{
+  "private": true,
+  "scripts": {
+    "devapp": "next dev",
+    "buildapp": "next build",
+    "startapp": "next start",
+    "lintjs": "next lint",
+    "lintsol": "find src test script -name \\*.sol -exec solhint \\{\\} \\+"
+  },
+  "dependencies": {
+    "-": "^0.0.1",
+    "@tanstack/react-query": "^5.31.0",
+    "bulma": "^1.0.0",
+    "next": "14.2.2",
+    "node-sass": "^9.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "save-dev": "^0.0.1-security",
+    "viem": "^2.9.25",
+    "wagmi": "^2.5.20"
+  },
+  "devDependencies": {
+    "eslint": "^8",
+    "eslint-config-next": "14.2.2",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-node": "^11.1.0"
+  }
+}

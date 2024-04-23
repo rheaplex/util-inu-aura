@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import {Test, console} from "forge-std/Test.sol";
+import {Test} from "forge-std/Test.sol";
 
 import {Upgrades} from "openzeppelin-foundry-upgrades/Upgrades.sol";
 
@@ -16,7 +16,7 @@ import {DummyERC721} from "../src/mocks/DummyERC721.sol";
 
 contract AuraTest is Test {
 
-    AccountV2 implementation;
+    AccountV2       private implementation;
     AccountRegistry public registry;
 
     Util        public util;
@@ -57,12 +57,12 @@ contract AuraTest is Test {
         nft = new DummyERC721(address(this));
     }
 
-    function test_Deployment() public view {
+    function testDeployment() public view {
         assertEq(aura.name(), "Aura");
         assertEq(aura.symbol(), "AURA");
     }
 
-    function test_AuraOf() public {
+    function testAuraOf() public {
         uint256 amount = 707 * 100000000000000;
         nft.mint(address(this), 1);
         address nftAccount = registry.createAccount(

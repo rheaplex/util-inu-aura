@@ -1,38 +1,44 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-pragma solidity ^0.8.2;
+pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
-import "tokenbound/interfaces/IRegistry.sol";
-import "./Util.sol";
-import "./Inu.sol";
+import {ERC20Upgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
+import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/OwnableUpgradeable.sol";
+
+import {IRegistry} from "tokenbound/interfaces/IRegistry.sol";
+
+import {Util} from "./Util.sol";
+import {Inu} from "./Inu.sol";
+
+error ArtHasNoUtility();
+error ArtIsDefinedByInutility();
+error ArtHasAnAura();
 
 contract Aura is ERC20Upgradeable, OwnableUpgradeable
-{
+{   
     // Magical (not magic) numbers for calculation.
-    uint256 ratio;
-    uint256 auraIs;
+    uint256 private constant RATIO;
+    uint256 private constant AURA_IS;
 
     // For finding token account balances;
-    address erc6551Registry;
+    address private erc6551Registry;
     // The util contract, which we call to check balance.
-    address util;
+    address private util;
     // The inu contract, which we call to check balance.
-    address inu;
+    address private inu;
 
     function initialize(
         address utilAddress,
         address inuAddress,        
         address erc6551RegistryAddress
     )
-        initializer
         public
+        initializer
     {
         __ERC20_init("Aura", "AURA");
         __Ownable_init(msg.sender);
-        ratio = 73;
-        auraIs = uint256(uint32(bytes4("aura")));
+        RATIO = 73;
+        AURA_IS = uint256(uint32(bytes4("aura")));
         erc6551Registry = erc6551RegistryAddress;
         util = utilAddress;
         inu = inuAddress;        
@@ -41,8 +47,8 @@ contract Aura is ERC20Upgradeable, OwnableUpgradeable
     // The registry address won't be stable until the EIP is stable.
     
     function setErc6551RegistryAddress(address erc6551RegistryAddress)
-        onlyOwner
         public
+        onlyOwner
     {
         erc6551Registry = erc6551RegistryAddress;
     }
@@ -68,21 +74,18 @@ contract Aura is ERC20Upgradeable, OwnableUpgradeable
             holderERC721ContractAddress,
             holderERC721TokenId
         );
-        require(
-            Util(util).balanceOf(holder) == 0,
-            "Art has no utility."
-        );
+        if (Util(util).balanceOf(holder) > 0) {
+            revert ArtHasNoUtility();
+        }
         uint256 inuBalance = Inu(inu).balanceOf(holder);
-        require(
-            inuBalance > 0,
-            "Art is defined by its inutility."
-        );
+        if (inuBalance == 0) {
+            revert ArtIsDefinedByInutility();
+        }
         uint256 auraBalance = this.balanceOf(holder); 
-        require(
-            auraBalance == 1,
-            "Art has an aura."
-        );
+        if (auraBalance != 1) {
+            revert ArtHasAnAura();
+        }
         // +1 to avoid divide by zero (overflow is fine) and to confound.
-        return ((inuBalance / ratio) / (holderERC721TokenId + 1)) % auraIs;
+        return ((inuBalance / RATIO) / (holderERC721TokenId + 1)) % AURA_IS;
     }
 }

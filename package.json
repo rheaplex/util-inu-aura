@@ -1,5 +1,6 @@
 {
   "private": true,
+  "type": "module",
   "scripts": {
     "devapp": "next dev",
     "buildapp": "next build",
@@ -11,19 +12,21 @@
     "-": "^0.0.1",
     "@tanstack/react-query": "^5.31.0",
     "bulma": "^1.0.0",
+    "fsevents": "^2.3.3",
     "next": "14.2.2",
-    "node-sass": "^9.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "save-dev": "^0.0.1-security",
+    "react-icons": "^5.1.0",
     "viem": "^2.9.25",
     "wagmi": "^2.5.20"
   },
   "devDependencies": {
+    "@wagmi/cli": "^2.1.4",
     "eslint": "^8",
     "eslint-config-next": "14.2.2",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-node": "^11.1.0"
+    "eslint-plugin-node": "^11.1.0",
+    "sass": "^1.75.0"
   }
 }

@@ -3,7 +3,7 @@
 pragma solidity ^0.8.4;
 
 import {ERC20Upgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
-import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/OwnableUpgradeable.sol";
+import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 
 import {IRegistry} from "tokenbound/interfaces/IRegistry.sol";
 
@@ -15,10 +15,10 @@ error ArtIsDefinedByInutility();
 error ArtHasAnAura();
 
 contract Aura is ERC20Upgradeable, OwnableUpgradeable
-{   
+{
     // Magical (not magic) numbers for calculation.
-    uint256 private constant RATIO;
-    uint256 private constant AURA_IS;
+    uint256 private constant RATIO = 73;
+    uint256 private constant AURA_IS = uint256(uint32(bytes4("aura")));
 
     // For finding token account balances;
     address private erc6551Registry;
@@ -29,7 +29,7 @@ contract Aura is ERC20Upgradeable, OwnableUpgradeable
 
     function initialize(
         address utilAddress,
-        address inuAddress,        
+        address inuAddress,
         address erc6551RegistryAddress
     )
         public
@@ -37,15 +37,13 @@ contract Aura is ERC20Upgradeable, OwnableUpgradeable
     {
         __ERC20_init("Aura", "AURA");
         __Ownable_init(msg.sender);
-        RATIO = 73;
-        AURA_IS = uint256(uint32(bytes4("aura")));
         erc6551Registry = erc6551RegistryAddress;
         util = utilAddress;
-        inu = inuAddress;        
+        inu = inuAddress;
     }
 
     // The registry address won't be stable until the EIP is stable.
-    
+
     function setErc6551RegistryAddress(address erc6551RegistryAddress)
         public
         onlyOwner
@@ -55,7 +53,7 @@ contract Aura is ERC20Upgradeable, OwnableUpgradeable
 
     // Anybody can have as much aura as they like.
     // But it may not be maningful on its own.
-    
+
     function mint(address to, uint256 amount) public {
         _mint(to, amount);
     }
@@ -64,7 +62,7 @@ contract Aura is ERC20Upgradeable, OwnableUpgradeable
 
     function auraOf(
         address holderERC721ContractAddress,
-        uint256 holderERC721TokenId 
+        uint256 holderERC721TokenId
     )
         public
         view
@@ -81,7 +79,7 @@ contract Aura is ERC20Upgradeable, OwnableUpgradeable
         if (inuBalance == 0) {
             revert ArtIsDefinedByInutility();
         }
-        uint256 auraBalance = this.balanceOf(holder); 
+        uint256 auraBalance = this.balanceOf(holder);
         if (auraBalance != 1) {
             revert ArtHasAnAura();
         }

@@ -1,3 +1,5 @@
+'use client';
+
 import { http, createConfig } from 'wagmi';
 import { mainnet, sepolia } from 'wagmi/chains';
 
@@ -6,5 +8,7 @@ export const config = createConfig({
   transports: {
     [mainnet.id]: http(),
     [sepolia.id]: http(),
-  },
+  }
 });
+
+console.log(config.contracts);

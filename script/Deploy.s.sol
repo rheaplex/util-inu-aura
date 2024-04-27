@@ -12,7 +12,7 @@ contract Deploy is Script {
     // https://github.com/erc6551/reference
     address private erc6551RegistryAddress
         = 0x000000006551c19487814612e58FE06813775758;
-    
+
     function run() external {
         vm.startBroadcast();
 
@@ -37,7 +37,7 @@ contract Deploy is Script {
                 )
             )
         );
-        
+
         vm.stopBroadcast();
     }
 }

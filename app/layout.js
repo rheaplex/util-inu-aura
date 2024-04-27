@@ -1,10 +1,8 @@
-import "./globals.scss";
-import { Providers } from './providers';
+'use client';
 
-export const metadata = {
-  title: "Util/Inu/Aura",
-  description: "Solving the utility problem.",
-};
+import "./globals.scss";
+
+import { Providers } from './providers';
 
 export default function RootLayout({children}) {
   return (

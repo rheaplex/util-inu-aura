@@ -1,3 +1,14 @@
 {
-  "extends": "next/core-web-vitals"
+  "plugins": [
+    "react-hooks"
+  ],
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:react-hooks/recommended"
+  ],
+  "ignorePatterns": [
+    "lib/",
+    "node_modules/"
+  ]
 }
+

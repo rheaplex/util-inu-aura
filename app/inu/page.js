@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useAccount, useReadContracts, useWriteContrac } from 'wagmi';
+import ConnectionManager from '../ConnectionManager';
 const utilContract = {};
 const inuContract = {};
 
@@ -64,6 +65,8 @@ export default function Inu() {
       </div>
       </div>
       </div>
+
+    <ConnectionManager />
 
       <Link href="/">🡄</Link>
       </div>

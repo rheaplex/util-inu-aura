@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-pragma solidity ^0.8.4;
+pragma solidity ^0.8.24;
 
-import {ERC20Upgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
-import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 import {IRegistry} from "tokenbound/interfaces/IRegistry.sol";
 
@@ -14,7 +16,7 @@ error ArtHasNoUtility();
 error ArtIsDefinedByInutility();
 error ArtHasAnAura();
 
-contract Aura is ERC20Upgradeable, OwnableUpgradeable
+contract Aura is ERC20, ERC20Burnable, ERC20Pausable, Ownable {
 {
     // Magical (not magic) numbers for calculation.
     uint256 private constant RATIO = 73;
@@ -27,19 +29,18 @@ contract Aura is ERC20Upgradeable, OwnableUpgradeable
     // The inu contract, which we call to check balance.
     address private inu;
 
-    function initialize(
+    constructor(
+        address initialOwner,
         address utilAddress,
         address inuAddress,
         address erc6551RegistryAddress
     )
-        public
-        initializer
+        ERC20("Util", "UTIL")
+        Ownable(initialOwner)
     {
-        __ERC20_init("Aura", "AURA");
-        __Ownable_init(msg.sender);
-        erc6551Registry = erc6551RegistryAddress;
         util = utilAddress;
         inu = inuAddress;
+        erc6551Registry = erc6551RegistryAddress;
     }
 
     // The registry address won't be stable until the EIP is stable.

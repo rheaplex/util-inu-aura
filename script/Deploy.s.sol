@@ -2,7 +2,6 @@
 
 pragma solidity ^0.8.2;
 
-import {Upgrades} from "openzeppelin-foundry-upgrades/Upgrades.sol";
 import {Script} from "forge-std/Script.sol";
 import {Util} from "../src/Util.sol";
 import {Inu} from "../src/Inu.sol";
@@ -16,26 +15,15 @@ contract Deploy is Script {
     function run() external {
         vm.startBroadcast();
 
-        address utilProxy = Upgrades.deployUUPSProxy(
-            "Util.sol",
-            abi.encodeCall(Util.initialize, ())
-        );
+        Util util = new Util(msg.sendr);
 
-        address inuProxy = Upgrades.deployUUPSProxy(
-            "Inu.sol",
-            abi.encodeCall(Inu.initialize, (utilProxy))
-        );
+        Inu inu = new Inu(msg.sender, address(util));
 
-        Upgrades.deployUUPSProxy(
-            "Aura.sol",
-            abi.encodeCall(
-                Aura.initialize,
-                (
-                    utilProxy,
-                    inuProxy,
-                    address(erc6551RegistryAddress)
-                )
-            )
+        Aura aura = new Aura(
+            msg.sender,
+            address(util),
+            address(inu),
+            erc6551RegistryAddress
         );
 
         vm.stopBroadcast();

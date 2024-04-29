@@ -2,18 +2,13 @@
 pragma solidity ^0.8.13;
 
 import {Test} from "forge-std/Test.sol";
-import {Upgrades} from "openzeppelin-foundry-upgrades/Upgrades.sol";
 import {Util} from "../src/Util.sol";
 
 contract UtilTest is Test {
     Util public util;
 
     function setUp() public {
-        address proxy = Upgrades.deployUUPSProxy(
-            "Util.sol",
-            abi.encodeCall(Util.initialize, ())
-        );
-        util = Util(proxy);
+        util = new Util();
     }
 
     function testDeployment() public view{

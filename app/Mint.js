@@ -45,7 +45,7 @@ export default function Mint({symbol}) {
       <form onSubmit={handleMint}>
       <div className="field has-addons">
       <div className="control">
-      <input name="amount" className="input" type="text" placeholder={`Amount of ${symbol} to mint`} disabled={isPending} />
+      <input name="amount" className="input input-mint" type="text" placeholder={`Amount`} disabled={isPending} />
       </div>
       <div className="control">
       <button className={`button button-mint is-info ${isPending && "is-loading"}`} type="submit">Mint {symbol}</button>

@@ -8,7 +8,7 @@ contract UtilTest is Test {
     Util public util;
 
     function setUp() public {
-        util = new Util();
+        util = new Util(msg.sender);
     }
 
     function testDeployment() public view{

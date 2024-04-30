@@ -2,7 +2,6 @@
 pragma solidity ^0.8.13;
 
 import {Test} from "forge-std/Test.sol";
-import {Upgrades} from "openzeppelin-foundry-upgrades/Upgrades.sol";
 import {Util} from "../src/Util.sol";
 import {Inu} from "../src/Inu.sol";
 
@@ -17,16 +16,8 @@ contract InuTest is Test {
     }
 
     function setUp() public {
-        address utilProxy = Upgrades.deployUUPSProxy(
-            "Util.sol",
-            abi.encodeCall(Util.initialize, ())
-        );
-        util = Util(utilProxy);
-        address inuProxy = Upgrades.deployUUPSProxy(
-            "Inu.sol",
-            abi.encodeCall(Inu.initialize, (utilProxy))
-        );
-        inu = Inu(inuProxy);
+        util = new Util(msg.sender);
+        inu = new Inu(msg.sender, address(util));
     }
 
     function testDeployment() public view {

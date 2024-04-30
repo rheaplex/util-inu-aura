@@ -17,7 +17,6 @@ error ArtIsDefinedByInutility();
 error ArtHasAnAura();
 
 contract Aura is ERC20, ERC20Burnable, ERC20Pausable, Ownable {
-{
     // Magical (not magic) numbers for calculation.
     uint256 private constant RATIO = 73;
     uint256 private constant AURA_IS = uint256(uint32(bytes4("aura")));
@@ -35,7 +34,7 @@ contract Aura is ERC20, ERC20Burnable, ERC20Pausable, Ownable {
         address inuAddress,
         address erc6551RegistryAddress
     )
-        ERC20("Util", "UTIL")
+        ERC20("Aura", "AURA")
         Ownable(initialOwner)
     {
         util = utilAddress;
@@ -59,7 +58,7 @@ contract Aura is ERC20, ERC20Burnable, ERC20Pausable, Ownable {
         _mint(to, amount);
     }
 
-    // Quantify the artistic aura of the NFT we are attached to.
+    // Quantify the artistic aura of an NFT.
 
     function auraOf(
         address holderERC721ContractAddress,
@@ -73,6 +72,16 @@ contract Aura is ERC20, ERC20Burnable, ERC20Pausable, Ownable {
             holderERC721ContractAddress,
             holderERC721TokenId
         );
+        return auraOf(holder);
+    }
+
+    // Quantify the artistic aura of an address.
+
+    function auraOf(address holder)
+        public
+        view
+        returns (uint256)
+    {
         if (Util(util).balanceOf(holder) > 0) {
             revert ArtHasNoUtility();
         }
@@ -85,6 +94,15 @@ contract Aura is ERC20, ERC20Burnable, ERC20Pausable, Ownable {
             revert ArtHasAnAura();
         }
         // +1 to avoid divide by zero (overflow is fine) and to confound.
-        return ((inuBalance / RATIO) / (holderERC721TokenId + 1)) % AURA_IS;
+        return (inuBalance / RATIO) / (uint256(uint160(holder) + 1) % AURA_IS);
+    }
+
+    // The following functions are overrides required by Solidity.
+
+    function _update(address from, address to, uint256 value)
+        internal
+        override(ERC20, ERC20Pausable)
+    {
+        super._update(from, to, value);
     }
 }

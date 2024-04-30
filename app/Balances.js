@@ -1,7 +1,10 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import {
   useAccount,
+  useBlockNumber,
   useChainId,
   useReadContracts
 } from 'wagmi';
@@ -25,18 +28,25 @@ export default function Balances({ symbols }) {
       address: ADDRESSES[symbol],
       abi: erc20Abi,
       functionName: "balanceOf",
-      args: [address],
+      args: [address]
     });
   });
   // Always call this, even if it will fail, to obey the Rule of Callbacks.
   const {
     data: balances,
     error,
-    isPending
+    isPending,
+    queryKey
   } = useReadContracts({
     allowFailure: false,
     contracts: contracts
   });
+
+  const queryClient = useQueryClient();
+  const { data: blockNumber } = useBlockNumber({ watch: true });
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey });
+  }, [blockNumber]);
 
   if (! isConnected) {
     return (<p>Connect to see account balances</p>);
@@ -55,7 +65,8 @@ export default function Balances({ symbols }) {
   }
 
   return (
-      <table>
+    <div className="content">
+      <table className="table">
       <tbody>
       {symbols.map((symbol, i) => {
         return (
@@ -67,5 +78,6 @@ export default function Balances({ symbols }) {
       })}
     </tbody>
       </table>
+      </div>
   );
 }

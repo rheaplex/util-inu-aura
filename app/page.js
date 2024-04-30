@@ -5,25 +5,40 @@ import { useAccount } from 'wagmi';
 import ConnectionManager from './ConnectionManager';
 import Balances from './Balances';
 import Mint from './Mint';
-import BurnAndMint from './BurnAndMint';
+import Approve from './Approve';
+import BurnUtilForInu from './BurnUtilForInu';
+import CheckAura from './CheckAura';
 
 export default function App() {
   const { address } = useAccount();
   return (
+    <section className="section">
       <div className="container">
       <div className="title">UTIL/INU/AURA</div>
-      <div className="content">
-      <div className="subtitle">Balances of {address}</div>
-      <Balances symbols='["UTIL", "INU", "AURA"]' />
-      </div>
-      <div className="content">
-      <div className="subtitle">Mint to {address}</div>
-      <Mint symbol="UTIL" />
-      <Mint symbol="AURA" />
-      <BurnAndMint />
-      </div>
+      <div className="box">
+      <div className="subtitle content">Address</div>
+      <div className="is-family-monospace has-text-weight-semibold content">
+      {address || "—"}
+    </div>
       <ConnectionManager />
       </div>
+      <div className="box">
+      <div className="subtitle">Balances of Address</div>
+      <Balances symbols='["UTIL", "INU", "AURA"]' />
+      </div>
+      <div className="box">
+      <div className="subtitle">Mint to Address</div>
+      <Mint symbol="UTIL" />
+      <Mint symbol="AURA" />
+      <Approve />
+      <BurnUtilForInu />
+      </div>
+      <div className="box">
+      <div className="subtitle">See Aura</div>
+      <CheckAura />
+      </div>
+      </div>
+      </section>
   );
 
 }

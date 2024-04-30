@@ -13,7 +13,7 @@ export default function ConnectionManager() {
   const { disconnect } = useDisconnect();
 
   return (
-      <div className="container">
+      <div className="content">
       <div>{error?.message}</div>
       {account.status === 'connected' ? (
           <button className="button" type="button" onClick={() => disconnect()}>
@@ -28,4 +28,3 @@ export default function ConnectionManager() {
     </div>
   );
 }
-

@@ -15,7 +15,7 @@ contract Deploy is Script {
     function run() external {
         vm.startBroadcast();
 
-        Util util = new Util(msg.sendr);
+        Util util = new Util(msg.sender);
 
         Inu inu = new Inu(msg.sender, address(util));
 

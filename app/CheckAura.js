@@ -33,7 +33,14 @@ export default function CheckAura() {
       <div className="field-body">
       <div className="field">
       <div className="control">
-      <input name="address" className="input" type="text" placeholder="0x0123456789abcdef0123" />
+      <input name="address"
+    className="input"
+    type="text"
+    placeholder="0x0123456789abcde0123456789abcdef01234567"
+    pattern="0x[0-9a-fA-F]{40}"
+    required={true}
+      />
+      <p className="help">Enter a valid Ethereum address</p>
       </div>
       </div>
       </div>
@@ -46,7 +53,14 @@ export default function CheckAura() {
       <div className="field-body">
       <div className="field">
       <div className="control">
-      <input name="id" className="input" type="text" placeholder="1" />
+      <input name="id"
+    className="input"
+    type="number"
+    placeholder="1"
+    pattern="\d*"
+    required={true}
+      />
+      <p className="help">Enter a valid ERC-721 token ID number</p>
       </div>
       </div>
       </div>

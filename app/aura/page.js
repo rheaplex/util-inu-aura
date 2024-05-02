@@ -76,10 +76,8 @@ export default function Aura() {
       <img
     id="aura"
     className="token-image"
-    fill={true}
     src={imgurl}
     alt="The token image."
-    priority={true}
       />
     {/*<audio id="aura-sound" controls loop={true} autoPlay={true}>
       <source src="aura.flac" type="audio/flac"></source>

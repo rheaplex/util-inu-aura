@@ -23,15 +23,19 @@ export default function App() {
       <ConnectionManager />
       </div>
       <div className="box">
-      <div className="subtitle">Balances of Address</div>
+      <div className="subtitle">Balances of {address || "—"}</div>
       <Balances symbols='["UTIL", "INU", "AURA"]' />
       </div>
       <div className="box">
-      <div className="subtitle">Mint to Address</div>
-      <Mint symbol="UTIL" />
-      <Mint symbol="AURA" />
-      <Approve />
-      <BurnUtilForInu />
+      <div className="subtitle">Mint to {address || "—"}</div>
+      {address
+       ? <div>
+       <Mint symbol="UTIL" />
+       <Mint symbol="AURA" />
+       <Approve />
+       <BurnUtilForInu />
+       </div>
+    : <p>Connect account to mint to above</p>}
       </div>
       <div className="box">
       <div className="subtitle">View Token Aura</div>

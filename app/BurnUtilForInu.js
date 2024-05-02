@@ -41,7 +41,14 @@ export default function BurnUtilForInu() {
       <form onSubmit={handleMint}>
       <div className="field has-addons">
       <div className="control">
-      <input name="amount" className="input" type="text" placeholder={`Amount of UTIL to burn in exchange for INU`} disabled={isPending} />
+      <input name="amount"
+    className="input"
+    type="number"
+    pattern="\d*"
+    required={true}
+    placeholder={1}
+    disabled={isPending}
+      />
       </div>
       <div className="control">
       <button className={`button button-mint is-info ${isPending && "is-loading"}`} type="submit">Burn Util For INU</button>

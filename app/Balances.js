@@ -49,7 +49,7 @@ export default function Balances({ symbols }) {
   }, [blockNumber, queryClient, queryKey]);
 
   if (! isConnected) {
-    return (<p>Connect to see account balances</p>);
+    return (<p>Connect account above to see its balances</p>);
   }
 
   if (isPending) {

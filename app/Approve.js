@@ -37,7 +37,14 @@ export default function Approve() {
       <form onSubmit={handleMint}>
       <div className="field has-addons">
       <div className="control">
-      <input name="amount" className="input" type="text" placeholder={`UTIL allowance for INU`} disabled={isPending} />
+      <input name="amount"
+    className="input"
+    type="number"
+    placeholder={1}
+    disabled={isPending}
+    pattern="\d*"
+    required={true}
+      />
       </div>
       <div className="control">
       <button className={`button button-mint is-info ${isPending && "is-loading"}`} type="submit">Approve UTIL For INU</button>

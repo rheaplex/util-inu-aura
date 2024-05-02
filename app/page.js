@@ -34,7 +34,7 @@ export default function App() {
       <BurnUtilForInu />
       </div>
       <div className="box">
-      <div className="subtitle">See Aura</div>
+      <div className="subtitle">View Token Aura</div>
       <CheckAura />
       </div>
       </div>

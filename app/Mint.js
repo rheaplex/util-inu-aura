@@ -2,6 +2,7 @@
 
 import {
   useAccount,
+  useChainId,
   useWaitForTransactionReceipt,
   useWriteContract
 } from 'wagmi';
@@ -9,8 +10,8 @@ import {
 import { utilAddress, auraAddress, utilAbi, auraAbi } from './generated';
 
 const ADDRESSES = {
-  "UTIL": utilAddress[31337],
-  "AURA": auraAddress[31337]
+  "UTIL": utilAddress,
+  "AURA": auraAddress
 };
 
 const ABIS = {
@@ -19,6 +20,7 @@ const ABIS = {
 };
 
 export default function Mint({symbol}) {
+  const chainId = useChainId();
   const account = useAccount();
   const { data: hash, error, isPending, writeContract } = useWriteContract();
 
@@ -29,7 +31,7 @@ export default function Mint({symbol}) {
     e.target.elements["amount"].value = "";
     writeContract({
       abi: ABIS[symbol],
-      address: ADDRESSES[symbol],
+      address: ADDRESSES[symbol][chainId],
       functionName: 'mint',
       args: [account.address, BigInt(amount)],
     });

@@ -22,7 +22,7 @@ export default function BurnUtilForInu() {
     e.target.elements["amount"].value = "";
     writeContract({
       abi: inuAbi,
-      address: inuAddress[31337],
+      address: inuAddress[chainId],
       functionName: 'burnUtilForInu',
       args: [BigInt(amount)],
     });

@@ -42,13 +42,6 @@ export const auraAbi = [
   },
   {
     type: 'function',
-    inputs: [{ name: 'holder', internalType: 'address', type: 'address' }],
-    name: 'auraOf',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
     inputs: [
       {
         name: 'holderERC721ContractAddress',
@@ -329,7 +322,7 @@ export const auraAbi = [
  *
  */
 export const auraAddress = {
-  31337: '0xc351628EB244ec633d5f21fBD6621e1a683B1181',
+  31337: '0xD8a5a9b31c3C0232E196d518E89Fd8bF83AcAd43',
 }
 
 /**
@@ -623,7 +616,7 @@ export const inuAbi = [
  *
  */
 export const inuAddress = {
-  31337: '0x7bc06c482DEAd17c0e297aFbC32f6e63d3846650',
+  31337: '0x2E2Ed0Cfd3AD2f1d34481277b3204d807Ca2F8c2',
 }
 
 /**
@@ -932,7 +925,7 @@ export const utilAbi = [
  *
  */
 export const utilAddress = {
-  31337: '0x7969c5eD335650692Bc04293B07F5BF2e7A673C0',
+  31337: '0x21dF544947ba3E8b3c32561399E88B52Dc8b2823',
 }
 
 /**

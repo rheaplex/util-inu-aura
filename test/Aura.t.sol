@@ -46,7 +46,7 @@ contract AuraTest is Test {
     }
 
     function testAuraOf() public {
-        uint256 amount = 707 * 100000000000000;
+        uint256 amount = 707 * 999999999999;
         nft.mint(address(this), 1);
         address nftAccount = registry.createAccount(
             address(nft),
@@ -57,31 +57,20 @@ contract AuraTest is Test {
         aura.auraOf(address(nft), 1);
         util.mint(address(this), amount);
         util.approve(address(inu), amount);
-        inu.burnUtilForInu(address(this), amount);
+        inu.burnUtilForInu(amount);
+        inu.transfer(nftAccount, 707);
 
-        inu.transfer(nftAccount, 73);
         vm.expectRevert(ArtHasAnAura.selector);
-
         aura.auraOf(address(nft), 1);
+
         aura.mint(nftAccount, 1);
         assertEq(aura.auraOf(address(nft), 1), 0);
-        inu.transfer(nftAccount, 73);
-        assertEq(aura.auraOf(address(nft), 1), 1);
-        inu.transfer(nftAccount, 146);
-        assertEq(aura.auraOf(address(nft), 1), 2);
+        inu.transfer(nftAccount, inu.balanceOf(address(this)));
+        assertEq(aura.auraOf(address(nft), 1), 25);
 
-        util.mint(address(nftAccount), amount);
+        util.mint(nftAccount, 1);
         vm.expectRevert(ArtHasNoUtility.selector);
         aura.auraOf(address(nft), 1);
 
-        address nftAccount2 = registry.createAccount(
-            address(nft),
-            1377
-        );
-        aura.mint(nftAccount2, 1);
-        inu.transfer(nftAccount2, 1378 * 73);
-        assertEq(aura.auraOf(address(nft), 1377), 1);
-        inu.transfer(nftAccount2, 1378 * 73);
-        assertEq(aura.auraOf(address(nft), 1377), 2);
     }
 }

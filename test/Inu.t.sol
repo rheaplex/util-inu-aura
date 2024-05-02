@@ -9,10 +9,11 @@ contract InuTest is Test {
     Util public util;
     Inu public  inu;
 
-    function burnUtilForInu(address from, uint256 amount) internal {
-        util.mint(from, amount);
+    function burnUtilForInu(address recipient, uint256 amount) internal {
+        util.mint(address(this), amount);
         util.approve(address(inu), amount);
-        inu.burnUtilForInu(from, amount);
+        inu.burnUtilForInu(amount);
+        inu.transfer(recipient, amount / 707);
     }
 
     function setUp() public {

@@ -14,9 +14,9 @@ import { erc20Abi } from 'viem' ;
 import { utilAddress, inuAddress, inuAbi, auraAddress } from './generated';
 
 const ADDRESSES = {
-  "UTIL": utilAddress[31337],
-  "INU": inuAddress[31337],
-  "AURA": auraAddress[31337]
+  "UTIL": utilAddress,
+  "INU": inuAddress,
+  "AURA": auraAddress
 };
 
 export default function Balances({ symbols }) {
@@ -25,7 +25,7 @@ export default function Balances({ symbols }) {
   symbols = JSON.parse(symbols);
   const contracts = symbols.map(symbol => {
     return ({
-      address: ADDRESSES[symbol],
+      address: ADDRESSES[symbol][chainId],
       abi: erc20Abi,
       functionName: "balanceOf",
       args: [address]
@@ -46,7 +46,7 @@ export default function Balances({ symbols }) {
   const { data: blockNumber } = useBlockNumber({ watch: true });
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey });
-  }, [blockNumber]);
+  }, [blockNumber, queryClient, queryKey]);
 
   if (! isConnected) {
     return (<p>Connect to see account balances</p>);

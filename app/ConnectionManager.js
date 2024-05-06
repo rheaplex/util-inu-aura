@@ -9,7 +9,7 @@ import { injected } from '@wagmi/connectors';
 
 export default function ConnectionManager() {
   const account = useAccount();
-  const { connectors, connect, status, error } = useConnect();
+  const { connect, error } = useConnect();
   const { disconnect } = useDisconnect();
 
   return (

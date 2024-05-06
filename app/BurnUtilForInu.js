@@ -1,9 +1,7 @@
 'use client';
 
 import {
-  useAccount,
   useChainId,
-  useWaitForTransactionReceipt,
   useWriteContract
 } from 'wagmi';
 import { ContractFunctionRevertedError } from 'viem';
@@ -12,8 +10,7 @@ import { inuAddress, inuAbi } from './generated';
 
 export default function BurnUtilForInu() {
   const chainId = useChainId();
-  const { account } = useAccount();
-  const { data: hash, error: error, isPending: isPending, writeContract: writeContract } = useWriteContract();
+  const { error, isPending, writeContract } = useWriteContract();
 
   function handleMint (e) {
     e.preventDefault();
@@ -27,10 +24,6 @@ export default function BurnUtilForInu() {
       args: [BigInt(amount)],
     });
   }
-  const { isLoading: isConfirming, isSuccess: isConfirmed } =
-        useWaitForTransactionReceipt({
-          hash,
-        });
 
   const revertError = error?.walk(err => err instanceof ContractFunctionRevertedError).data?.errorName;
 

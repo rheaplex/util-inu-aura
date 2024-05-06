@@ -1,14 +1,13 @@
 {
-  "plugins": [
-    "react-hooks"
-  ],
   "extends": [
-    "next/core-web-vitals",
-    "plugin:react-hooks/recommended"
+    "eslint:recommended",
+    "next/core-web-vitals"
   ],
+  "globals": {
+    "BigInt": true
+  },
   "ignorePatterns": [
     "lib/",
     "node_modules/"
   ]
 }
-

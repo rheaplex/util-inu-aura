@@ -2,8 +2,8 @@
 
 import './page.scss';
 
+import { useSearchParams } from 'next/navigation'
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import {
@@ -16,12 +16,12 @@ import { auraAddress, auraAbi } from '../generated';
 
 export default function Aura() {
   const chainId = useChainId();
-  const searchParams = useSearchParams();
   const queryClient = useQueryClient();
+  const searchParams = useSearchParams();
   const { data: blockNumber } = useBlockNumber({ watch: true });
+  const [imgurl, setImgurl] = useState(undefined);
   const address = searchParams.get('address');
   const id = searchParams.get('id');
-  const [imgurl, setImgurl] = useState(undefined);
 
   const { data: aura, error, queryKey } = useReadContract({
     abi: auraAbi,
@@ -30,11 +30,9 @@ export default function Aura() {
     args:[address, id],
   });
 
-  const revertError = error?.walk(err => err instanceof ContractFunctionExecutionError);
-
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey });
-  }, [blockNumber, queryClient, queryKey]);
+  }, [blockNumber, queryClient, queryKey, searchParams]);
 
   const { data: tokenUri, error2 } = useReadContract({
     abi: erc721Abi,
@@ -42,6 +40,11 @@ export default function Aura() {
     functionName: 'tokenURI',
     args:[id],
   });
+
+  const revertError =
+        (error || error2)?.walk(
+          err => err instanceof ContractFunctionExecutionError
+        );
 
   useEffect(() => {
     async function fetchMetadata() {
@@ -62,27 +65,36 @@ export default function Aura() {
   }, [tokenUri]);
 
   useEffect(() => {
-    if (aura) {
-      document.getElementById("aura").classList.add('img-aura');
-    } else {
-      document.getElementById("aura").classList.remove('img-aura');
+    if (imgurl) {
+      if (aura) {
+        document.getElementById("aura").classList.add('img-aura');
+      } else {
+        document.getElementById("aura").classList.remove('img-aura');
+      }
     }
-  }, [aura]);
+  }, [aura, imgurl]);
 
   return (
       <div className="columns is-gapless fullheight is-centered is-vcentered">
       {/*{address || '—'}<br />
          {aura?.toString() || "?"}<br />*/}
-      <img
-    id="aura"
-    className="token-image"
-    src={imgurl}
-    alt="The token image."
-      />
+    {imgurl
+     ? <Image
+     width={0}
+     height={0}
+     id="aura"
+     className="token-image"
+     src={imgurl}
+     alt="The token image."
+     />
+     : <div className="field">
+     <div className="control is-loading is-large">
+     </div>
+     </div>}
     {/*<audio id="aura-sound" controls loop={true} autoPlay={true}>
       <source src="aura.flac" type="audio/flac"></source>
       </audio>*/}
-      {/* revertError?.toString() || error?.toString() || '' */}
+      { revertError?.toString() || error?.toString() || ""}
       </div>
   );
 }

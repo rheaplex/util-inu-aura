@@ -1,15 +1,9 @@
 'use client';
 
-import { useRouter } from "next/router";
-import { useAccount, useReadContract, serialize } from 'wagmi';
-import { ContractFunctionRevertedError, erc20Abi } from 'viem' ;
-import { auraAddress, auraAbi } from './generated';
-
 export default function CheckAura() {
 
   function onClick (e) {
     e.preventDefault();
-    const formData = new FormData(e.target);
     const address = e.target.elements["address"].value;
     const id = e.target.elements["id"].value;
     const newWindow = window.open(
@@ -20,12 +14,11 @@ export default function CheckAura() {
     if (newWindow) {
       newWindow.opener = null;
     }
-  };
+  }
 
   return (
       <div className="content">
       <form className="" onSubmit={onClick}>
-
       <div className="field is-horizontal">
       <div className="field-label is-normal">
       <label className="label">NFT contract address</label>

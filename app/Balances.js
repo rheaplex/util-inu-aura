@@ -8,10 +8,9 @@ import {
   useChainId,
   useReadContracts
 } from 'wagmi';
-import { injected } from '@wagmi/connectors';
 import { erc20Abi } from 'viem' ;
 
-import { utilAddress, inuAddress, inuAbi, auraAddress } from './generated';
+import { utilAddress, inuAddress, auraAddress } from './generated';
 
 const ADDRESSES = {
   "UTIL": utilAddress,

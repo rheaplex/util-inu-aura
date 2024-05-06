@@ -9,6 +9,6 @@ AURA: The aura of art - its presence, cultural cachet, or specialness.
 # Notes
 
 Uses code from https://github.com/tokenbound/contracts .
-In contracts/ , the tokenbound/ directory is a copy of tokenbound/contracts/src,
-modified where needed to use node_modules relative paths rather than remappings.
-Note that this only effects test code.
+
+This is a static next.js app. It is built using `missingSuspenseWithCSRBailout`
+because `/aura/` needs to access the url search params.

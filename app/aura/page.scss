@@ -1,9 +1,10 @@
 html, body, .fullheight {
-  height: 100%
+    height: 100%;
+    margin: 0px !important;
 }
 
 .token-image {
-    max-height: 90vmin;
+    height: 90vmin;
     width: auto !important;
     border-radius: 4%;
 }

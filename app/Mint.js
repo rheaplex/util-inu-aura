@@ -3,7 +3,6 @@
 import {
   useAccount,
   useChainId,
-  useWaitForTransactionReceipt,
   useWriteContract
 } from 'wagmi';
 
@@ -22,7 +21,7 @@ const ABIS = {
 export default function Mint({symbol}) {
   const chainId = useChainId();
   const account = useAccount();
-  const { data: hash, error, isPending, writeContract } = useWriteContract();
+  const { error, isPending, writeContract } = useWriteContract();
 
   async function handleMint (e) {
     e.preventDefault();
@@ -37,23 +36,27 @@ export default function Mint({symbol}) {
     });
   }
 
-  const { isLoading: isConfirming, isSuccess: isConfirmed } =
-        useWaitForTransactionReceipt({
-          hash,
-        });
-
   return (
       <div className="content">
       <form onSubmit={handleMint}>
       <div className="field has-addons">
       <div className="control">
-      <input name="amount" className="input input-mint" type="number" placeholder={1} disabled={isPending}
+      <input
+    name="amount"
+    className="input input-mint"
+    type="number"
+    placeholder={1}
+    disabled={isPending}
     pattern="\d*"
     required={true}
       />
       </div>
       <div className="control">
-      <button className={`button button-mint is-info ${isPending && "is-loading"}`} type="submit">Mint {symbol}</button>
+      <button
+    className={`button button-mint is-info ${isPending && "is-loading"}`}
+    type="submit">
+      Mint {symbol}
+    </button>
       </div>
       </div>
       </form>

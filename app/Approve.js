@@ -1,9 +1,7 @@
 'use client';
 
 import {
-  useAccount,
   useChainId,
-  useWaitForTransactionReceipt,
   useWriteContract
 } from 'wagmi';
 
@@ -11,8 +9,11 @@ import { utilAddress, inuAddress, utilAbi } from './generated';
 
 export default function Approve() {
   const chainId = useChainId();
-  const { account } = useAccount();
-  const { data: hash, error: error, isPending: isPending, writeContract: writeContract } = useWriteContract();
+  const {
+    error: error,
+    isPending: isPending,
+    writeContract: writeContract
+  } = useWriteContract();
 
   function handleMint (e) {
     e.preventDefault();
@@ -26,11 +27,6 @@ export default function Approve() {
         args: [inuAddress[chainId], BigInt(amount)],
       });
   }
-
-  const { isLoading: isConfirming, isSuccess: isConfirmed } =
-        useWaitForTransactionReceipt({
-          hash,
-        });
 
   return (
       <div className="content">

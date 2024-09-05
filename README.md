@@ -9,6 +9,3 @@ AURA: The aura of art - its presence, cultural cachet, or specialness.
 # Notes
 
 Uses code from https://github.com/tokenbound/contracts .
-
-This is a static next.js app. It is built using `missingSuspenseWithCSRBailout`
-because `/aura/` needs to access the url search params.

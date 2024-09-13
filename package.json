@@ -7,7 +7,6 @@
   },
   "dependencies": {
     "-": "^0.0.1",
-    "@wagmi/core": "^2.13.5",
     "bulma": "^1.0.0",
     "encoding": "^0.1.13",
     "pino-pretty": "^11.0.0",
@@ -15,7 +14,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.10.0",
-    "@wagmi/cli": "^2.1.4",
+    "@wagmi/cli": "^2.1.15",
+    "@wagmi/core": "^2.13.5",
     "chai": "^4.2.0",
     "eslint": "^9.10.0",
     "globals": "^15.9.0"

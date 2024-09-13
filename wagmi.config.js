@@ -29,10 +29,9 @@ function getAddress (contractName, chainId) {
     path.join(BROADCAST, chainId, 'run-latest.json'),
     'utf8'
   ));
-
   return run.transactions
     .find(
-      tx =>  (tx.transactionType == 'CREATE')
+      tx => (tx.transactionType == 'CREATE')
         && (tx.contractName == contractName)
     ).contractAddress;
 }
@@ -59,6 +58,6 @@ function getContracts () {
 
 /** @type {import('@wagmi/cli').Config} */
 export default defineConfig({
-  out: 'app/generated.js',
+  out: 'app/js/generated.js',
   contracts: getContracts()
 });

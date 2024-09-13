@@ -1,10 +1,8 @@
 import {
   createPublicClient,
-  ContractFunctionRevertedError,
   custom,
   erc20Abi,
   erc721Abi,
-  http,
 } from 'viem';
 import { mainnet } from 'viem/chains';
 
@@ -87,7 +85,7 @@ async function readBalances (symbols) {
     });
   });
   const results = await client.multiCall({ contracts });
-  const i = 0;
+  let i = 0;
   return results.map(result => ({
     symbol: symbols[i++],
     value: result.status == "success" ? result.result : "error"
@@ -105,9 +103,9 @@ async function readAura () {
 }
 
 async function unwatchAura () {
-  if (unwatchAura) {
+  if (unwatchAuraCallback) {
     await unwatchAura();
-    unwatchAura = null;
+    unwatchAuraCallback = null;
   }
 }
 

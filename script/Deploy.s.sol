@@ -39,6 +39,10 @@ contract Deploy is Script {
             CrossChainExecutorList crosschain = new CrossChainExecutorList();
             AccountV2 implementation = new AccountV2(address(crosschain));
             AccountRegistry registry = new AccountRegistry(address(implementation));
+            console2.log(msg.sender);
+            console2.log(address(aura.owner()));
+            console2.log(address(aura));
+            console2.log(address(registry));
             aura.setErc6551RegistryAddress(address(registry));
             DummyERC721 nft = new DummyERC721(msg.sender);
 

@@ -1,3 +1,31 @@
 .button-mint {
     width: 12em;
 }
+
+/* Also for html and body in aura view. */
+.fullheight {
+    height: 100%;
+    margin: 0px !important;
+}
+
+.token-image {
+    height: 90vmin;
+    width: auto !important;
+    border-radius: 4%;
+}
+
+.img-aura {
+    background-color: #fff;
+    box-shadow: 0 0 100% 100% #0ff;
+    animation: 1s linear 0s infinite alternate animate-aura;
+}
+
+@keyframes animate-aura {
+    from {
+        box-shadow: 0 0 140px 90px #fff;
+    }
+
+    to {
+        box-shadow: 0 0 140px 90px #0ff;
+    }
+}

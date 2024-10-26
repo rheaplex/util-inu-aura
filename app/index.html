@@ -20,24 +20,24 @@
           <div class="subtitle content">Address</div>
           <div class="is-family-monospace has-text-weight-semibold content">
             <p class="wallet-address">—</p>
-             <form id="connect-address">
-                <div class="control">
-                  <button
-                    class="button is-info"
-                    type="submit">
-                    Connect
-                  </button>
+            <form id="connect-address">
+              <div class="control">
+                <button
+                  class="button button-mint is-primary"
+                  type="submit">
+                  Connect
+                </button>
               </div>
-             </form>
-             <form id="disconnect-address" hidden>
-                <div class="control">
-                  <button
-                    class="button is-info"
-                    type="submit">
-                    Disconnect
-                  </button>
+            </form>
+            <form id="disconnect-address" hidden>
+              <div class="control">
+                <button
+                  class="button button-mint is-primary"
+                  type="submit">
+                  Disconnect
+                </button>
               </div>
-          </form>
+            </form>
           </div>
         </div>
 
@@ -63,92 +63,181 @@
           </div>
         </div>
 
-        <div class="box" id="address-mint">
-          <div class="subtitle">Mint/Burn for <span class="wallet-address">—</span></div>
+        <div class="box address-required" id="address-mint">
+          <div class="subtitle">Mint for <span class="wallet-address">—</span></div>
           <div class="content">
-            <form id="mint-util" >
-              <div class="field has-addons">
-                <div class="control">
-                  <input disabled
-                    name="amount"
-                    class="input input-mint mint-field"
-                    type="number"
-                    placeholder="1"
-                    pattern="\d*"
-                    required
-                    />
+            <form id="mint-tokens" >
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">Amount</label>
                 </div>
-                <div class="control">
-                  <button disabled
-                    class="button button-mint is-info"
-                    type="submit">
-                    Mint UTIL
-                  </button>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      <input name="amount"
+                             class="input"
+                             type="number"
+                             placeholder="1"
+                             pattern="\d*"
+                             required disabled
+                             />
+                      <p class="help">The number of tokens to mint</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="field is-horizontal">
+                <div class="field-label">
+                  <!-- Left empty for spacing -->
+                </div>
+                <div class="field-body">
+                  <div class="field is-grouped">
+                    <div class="control">
+                      <button disabled
+                              name="UTIL"
+                              class="button button-mint is-info"
+                              type="submit">
+                        Mint UTIL
+                      </button>
+                    </div>
+                    <div class="control">
+                      <button disabled
+                              class="button button-mint is-info"
+                              type="submit">
+                        Mint AURA
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </form>
           </div>
+        </div>
+
+        <div class="box address-required" id="address-transfer">
+          <div class="subtitle">Transfer from <span class="wallet-address">—</span></div>
           <div class="content">
-            <form id="approve-utils">
-              <div class="field has-addons">
-                <div class="control">
-                  <input disabled
-                         name="amount"
-                         class="input"
-                         type="number"
-                         placeholder="1"
-                         pattern="\d*"
-                         required
-                         />
+            <form id="transfer-tokens">
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">Recipient</label>
                 </div>
-                <div class="control">
-                  <button disabled
-                          class="button button-mint is-info"
-                          type="submit">Approve UTIL For INU</button>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      <input name="address"
+                             class="input"
+                             type="text"
+                             placeholder="0x0123456789abcde0123456789abcdef01234567"
+                             pattern="0x[0-9a-fA-F]{40}"
+                             required disabled
+                             />
+                      <p class="help">Enter a valid Ethereum address to send the tokens to</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">Amount</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      <input name="amount"
+                             class="input"
+                             type="number"
+                             placeholder="1"
+                             pattern="\d*"
+                             required disabled
+                             />
+                      <p class="help">The number of tokens to send</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="field is-horizontal">
+                <div class="field-label">
+                  <!-- Left empty for spacing -->
+                </div>
+                <div class="field-body">
+                  <div class="field is-grouped">
+                    <div class="control">
+                      <button disabled
+                              name="UTIL"
+                              class="button button-mint is-info"
+                              type="submit">
+                        Transfer UTIL
+                      </button>
+                    </div>
+                    <div class="control">
+                      <button disabled
+                              name="INU"
+                              class="button button-mint is-info"
+                              type="submit">
+                        Transfer INU
+                      </button>
+                    </div>
+                    <div class="control">
+                      <button disabled
+                              name="AURA"
+                              class="button button-mint is-info"
+                              type="submit">
+                        Transfer AURA
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </form>
           </div>
-          <div class="content">
-            <form id="burn-utils">
-              <div class="field has-addons">
-                <div class="control">
-                  <input disabled
-                         name="amount"
-                         class="input"
-                         type="number"
-                         pattern="\d*"
-                         required
-                         placeholder="1"
-                         />
-                </div>
-                <div class="control">
-                  <button disabled
-                           class="button button-mint is-info"
-                          type="submit">Burn UTIL For INU</button>
-                </div>
-              </div>
-            </form>
+        </div>
+
+
+        <div class="box address-required" id="address-other">
+          <div class="subtitle">
+            Other actions for <span class="wallet-address">—</span>
           </div>
           <div class="content">
-            <form id="mint-aura">
-              <div class="field has-addons">
-                <div class="control">
-                  <input disabled
-                    name="amount"
-                    class="input input-mint"
-                    type="number"
-                    placeholder="1"
-                    pattern="\d*"
-                    required
-                    />
+            <form id="other-actions-tokens" >
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">Amount</label>
                 </div>
-                <div class="control">
-                  <button disabled
-                    class="button button-mint is-info"
-                    type="submit">
-                    Mint AURA
-                  </button>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      <input name="amount"
+                             class="input"
+                             type="number"
+                             placeholder="1"
+                             pattern="\d*"
+                             required disabled
+                             />
+                      <p class="help">The number of tokens to use</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="field is-horizontal">
+                <div class="field-label">
+                  <!-- Left empty for spacing -->
+                </div>
+                <div class="field-body">
+                  <div class="field is-grouped">
+                    <div class="control">
+                      <button disabled
+                              name="approve-util"
+                              class="button button-mint is-info"
+                              type="submit">Approve UTIL For INU</button>
+                    </div>
+                    <div class="control">
+                      <button disabled
+                              name="burn-util"
+                              class="button button-mint is-info"
+                              type="submit">Burn UTIL For INU</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </form>
@@ -156,7 +245,7 @@
         </div>
 
         <div class="box">
-        <div class="subtitle">View Token Aura</div>
+          <div class="subtitle">View Token Aura</div>
           <div class="content">
             <form id="check-aura">
               <div class="field is-horizontal">
@@ -179,40 +268,39 @@
                 </div>
               </div>
               <div class="field is-horizontal">
-              <div class="field-label is-normal">
-                <label class="label">Token ID number</label>
-              </div>
-              <div class="field-body">
-                <div class="field">
-                  <div class="control">
-                    <input name="id"
-                           class="input"
-                           type="number"
-                           placeholder="1"
-                           pattern="\d*"
-                           required
-                           />
-                    <p class="help">Enter a valid ERC-721 token ID number</p>
+                <div class="field-label is-normal">
+                  <label class="label">Token ID number</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      <input name="id"
+                             class="input"
+                             type="number"
+                             placeholder="1"
+                             pattern="\d*"
+                             required
+                             />
+                      <p class="help">Enter a valid ERC-721 token ID number</p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div class="field is-horizontal">
-              <div class="field-label">
-                <!-- Left empty for spacing -->
-              </div>
-              <div class="field-body">
-                <div class="field">
-                  <div class="control">
-                    <button class="button is-primary" >
-                      View
-                    </button>
+              <div class="field is-horizontal">
+                <div class="field-label">
+                  <!-- Left empty for spacing -->
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      <button class="button is-primary" >
+                        View
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </form>
+            </form>
           </div>
         </div>
 

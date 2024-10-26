@@ -126,6 +126,17 @@ async function writeMint (symbol, amount) {
   });
 }
 
+async function writeTransfer (symbol, address, amount) {
+  const chainId = await walletClient.getChainId();
+  return walletClient.writeContract({
+    abi: ABIS[symbol],
+    address: ADDRESSES[symbol][chainId],
+    functionName: 'transfer',
+    args: [ address, BigInt(amount) ],
+    account: walletAddress
+  });
+}
+
 async function writeApproveUtils (amount) {
   const chainId = await walletClient.getChainId();
   return walletClient.writeContract({
@@ -193,7 +204,7 @@ function disableMintForms () {
 
 function enableMintForms () {
   Array.from(document.querySelectorAll(
-    "#address-mint input, #address-mint button"
+    ".address-required input, .address-required button"
   )).forEach(element => element.disabled = false);
 }
 
@@ -202,6 +213,7 @@ function enableMintForms () {
 ////////////////////////////////////////////////////////////////////////
 
 async function handleCheckAura (e) {
+  e.preventDefault();
   const formData = new FormData(e.target);
   tokenAddress = formData.get('address');
   tokenId = formData.get('id');
@@ -211,36 +223,39 @@ async function handleCheckAura (e) {
   return watchAura();
 }
 
-async function handleMint (symbol, e) {
+async function handleMintTokens (e) {
   e.preventDefault();
+  const symbol = e.submitter.name;
   const formData = new FormData(e.target);
   const amount = formData.get('amount');
   e.target.elements["amount"].value = "";
   return writeMint(symbol, amount);
 }
 
-async function handleMintUtils (e) {
-  return handleMint("UTIL", e);
+async function handleTransferTokens (e) {
+  e.preventDefault();
+  const symbol = e.submitter.name;
+  const formData = new FormData(e.target);
+  const address = formdata.get("address");
+  const amount = formData.get('amount');
+  e.target.elements["amount"].value = "";
+  return writeTransfer(symbol, amount, address);
 }
 
-async function handleMintAura (e) {
-  return handleMint("AURA", e);
-}
-
-function handleApproveUtils (e) {
+async function handleActionsTokens (e) {
   e.preventDefault();
   const formData = new FormData(e.target);
   const amount = formData.get('amount');
   e.target.elements["amount"].value = "";
-  return writeApproveUtils(amount);
-}
-
-async function handleBurnUtilForInu (e) {
-  e.preventDefault();
-  const formData = new FormData(e.target);
-  const amount = formData.get('amount');
-  e.target.elements["amount"].value = "";
-  return writeBurnUtilForInu(amount);
+  switch (e.submitter.name) {
+  case "approve-util":
+    return writeApproveUtils(amount);
+    break;
+  case "burn-util":
+    return writeBurnUtilForInu(amount);
+  default:
+    return null;
+  }
 }
 
 async function handleConnectAddress (e) {
@@ -285,7 +300,6 @@ async function updateBalances () {
     document.getElementById("aura-balance").innerHTML =
       await readBalance("AURA");
   }
-
 }
 
 export function init () {
@@ -300,9 +314,8 @@ export function init () {
   });
   onSubmit("connect-address", handleConnectAddress);
   onSubmit("disconnect-address", handleDisconnectAddress);
-  onSubmit("mint-util", handleMintUtils);
-  onSubmit("mint-aura", handleMintAura);
-  onSubmit("approve-utils", handleApproveUtils);
-  onSubmit("burn-utils", handleBurnUtilForInu);
+  onSubmit("mint-tokens", handleMintTokens);
+  onSubmit("transfer-tokens", handleTransferTokens);
+  onSubmit("other-actions-tokens", handleActionsTokens);
   onSubmit("check-aura", handleCheckAura);
 }

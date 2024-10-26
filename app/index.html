@@ -12,47 +12,66 @@
   <body>
 
     <section class="section">
-      <h1 class="title">UTIL/INU/AURA</h1>
       <div class="container">
+
+        <h1 class="title">UTIL/INU/AURA</h1>
 
         <div class="box">
           <div class="subtitle content">Address</div>
           <div class="is-family-monospace has-text-weight-semibold content">
-            <span class="wallet-address">—</span>
+            <p class="wallet-address">—</p>
+             <form id="connect-address">
+                <div class="control">
+                  <button
+                    class="button is-info"
+                    type="submit">
+                    Connect
+                  </button>
+              </div>
+             </form>
+             <form id="disconnect-address" hidden>
+                <div class="control">
+                  <button
+                    class="button is-info"
+                    type="submit">
+                    Disconnect
+                  </button>
+              </div>
+          </form>
           </div>
         </div>
 
-        <div class="box">
+        <div class="box" id="address-balances">
           <div class="subtitle">Balances of <span class="wallet-address">—</span></div>
           <div class="content">
             <table class="table">
               <tbody>
                 <tr key="UTIL">
                   <td>UTIL</td>
-                  <td>-</td>
+                  <td id="util-balance">-</td>
                 </tr>
                 <tr key="INU">
                   <td>INU</td>
-                  <td>-</td>
+                  <td id="inu-balance">-</td>
                 </tr>
                 <tr key="AURA">
                   <td>AURA</td>
-                  <td>-</td>
+                  <td id="aura-balance">-</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
 
-        <div class="box">
+        <div class="box" id="address-mint">
           <div class="subtitle">Mint/Burn for <span class="wallet-address">—</span></div>
           <div class="content">
-            <form onSubmit="handleMintUtil">
+            <form id="mint-util" >
               <div class="field has-addons">
                 <div class="control">
-                  <input
+                  <input disabled
                     name="amount"
-                    class="input input-mint"
+                    class="input input-mint mint-field"
                     type="number"
                     placeholder="1"
                     pattern="\d*"
@@ -60,7 +79,7 @@
                     />
                 </div>
                 <div class="control">
-                  <button
+                  <button disabled
                     class="button button-mint is-info"
                     type="submit">
                     Mint UTIL
@@ -70,10 +89,52 @@
             </form>
           </div>
           <div class="content">
-            <form onSubmit="handleMintAura">
+            <form id="approve-utils">
               <div class="field has-addons">
                 <div class="control">
-                  <input
+                  <input disabled
+                         name="amount"
+                         class="input"
+                         type="number"
+                         placeholder="1"
+                         pattern="\d*"
+                         required
+                         />
+                </div>
+                <div class="control">
+                  <button disabled
+                          class="button button-mint is-info"
+                          type="submit">Approve UTIL For INU</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="content">
+            <form id="burn-utils">
+              <div class="field has-addons">
+                <div class="control">
+                  <input disabled
+                         name="amount"
+                         class="input"
+                         type="number"
+                         pattern="\d*"
+                         required
+                         placeholder="1"
+                         />
+                </div>
+                <div class="control">
+                  <button disabled
+                           class="button button-mint is-info"
+                          type="submit">Burn UTIL For INU</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="content">
+            <form id="mint-aura">
+              <div class="field has-addons">
+                <div class="control">
+                  <input disabled
                     name="amount"
                     class="input input-mint"
                     type="number"
@@ -83,49 +144,11 @@
                     />
                 </div>
                 <div class="control">
-                  <button
+                  <button disabled
                     class="button button-mint is-info"
                     type="submit">
                     Mint AURA
                   </button>
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="content">
-            <form onSubmit="handleApproveUtils">
-              <div class="field has-addons">
-                <div class="control">
-                  <input name="amount"
-                         class="input"
-                         type="number"
-                         placeholder="1"
-                         pattern="\d*"
-                         required
-                         />
-                </div>
-                <div class="control">
-                  <button class="button button-mint is-info"
-                          type="submit">Approve UTIL For INU</button>
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="content">
-            <form onSubmit="handleBurnUtilForInu">
-              <div class="field has-addons">
-                <div class="control">
-                  <input name="amount"
-                         class="input"
-                         type="number"
-                         pattern="\d*"
-                         required
-                         placeholder="1"
-                         />
-                </div>
-                <div class="control">
-                  <button class="button button-mint is-info"
-                          type="submit">Burn Util For INU</button>
                 </div>
               </div>
             </form>
@@ -135,7 +158,7 @@
         <div class="box">
         <div class="subtitle">View Token Aura</div>
           <div class="content">
-            <form class="" onSubmit="handleCheckAura">
+            <form id="check-aura">
               <div class="field is-horizontal">
                 <div class="field-label is-normal">
                   <label class="label">NFT contract address</label>
@@ -196,6 +219,11 @@
       </div>
 
     </section>
+
+    <script type="module">
+      import { init } from "./js/util-inu-aura.js";
+      document.addEventListener("DOMContentLoaded", init);
+    </script>
 
   </body>
 

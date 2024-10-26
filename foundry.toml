@@ -4,8 +4,8 @@ out = "out"
 libs = ["lib"]
 
 offline = true
-
 solc = "../../.local/bin/solc"
+
 solc_version = "0.8.24"
 optimizer = true
 optimizer_runs = 200

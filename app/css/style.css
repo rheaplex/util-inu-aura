@@ -3,15 +3,22 @@
 }
 
 /* Also for html and body in aura view. */
-.fullheight {
+.full-height {
     height: 100%;
     margin: 0px !important;
 }
 
+#display {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
 .token-image {
-    height: 90vmin;
-    width: auto !important;
+    width: 90vmin;
     border-radius: 4%;
+    border: auto;
 }
 
 .img-aura {

@@ -42,7 +42,7 @@ let tokenId;
 let metadata;
 let imgUrl;
 let aura;
-let unwatchAuraCallback;
+let unwatchAuraFun;
 let balanceIntervalId;
 
 ////////////////////////////////////////////////////////////////////////
@@ -50,7 +50,7 @@ let balanceIntervalId;
 ////////////////////////////////////////////////////////////////////////
 
 async function fetchMetadata () {
-  const tokenUri = await client.useReadContract({
+  const tokenUri = await publicClient.readContract({
     abi: erc721Abi,
     address: tokenAddress,
     functionName: 'tokenURI',
@@ -93,19 +93,20 @@ async function readAura () {
     functionName: 'auraOf',
     args:[ tokenAddress, tokenId ],
   });
+  setGuiAura();
 }
 
 async function unwatchAura () {
-  if (unwatchAuraCallback) {
-    await unwatchAura();
-    unwatchAuraCallback = null;
+  if (unwatchAuraFun) {
+    await unwatchAuraFun();
+    unwatchAuraFun = null;
   }
 }
 
 async function watchAura () {
   unwatchAura();
   const chainId = await publicClient.getChainId();
-  unwatchAuraCallback = publicClient.watchContractEvent({
+  unwatchAuraFun = publicClient.watchContractEvent({
     address: auraAddress[chainId],
     abi: auraAbi,
     eventName: "Transfer",
@@ -163,6 +164,14 @@ async function writeBurnUtilForInu (amount) {
 // Gui manipulation.
 ////////////////////////////////////////////////////////////////////////
 
+function show (element) {
+  document.getElementById(element).style.display = "block";
+}
+
+function hide (element) {
+  document.getElementById(element).style.display = "none";
+}
+
 function setWalletAddress (address) {
   walletAddress = address || false;
   [...document.getElementsByClassName("wallet-address")]
@@ -170,6 +179,11 @@ function setWalletAddress (address) {
 }
 
 function setGuiAura () {
+  if (imgUrl) {
+    document.getElementById("aura").src = imgUrl;
+  } else {
+    document.getElementById("aura").src = undefined;
+  }
   if (imgUrl && aura) {
     document.getElementById("aura").classList.add('img-aura');
   } else {
@@ -180,20 +194,14 @@ function setGuiAura () {
 async function leaveAuraDisplay () {
   document.getElementById("aura").src = undefined;
   document.getElementById("aura").classList.remove('img-aura');
+  show("gui");
+  hide("display");
   tokenAddress = null;
   tokenId = null;
   metadata = null;
   imgUrl = null;
   aura = null;
   return unwatchAura();
-}
-
-function show (element) {
-  document.getElementById(element).hidden = false;
-}
-
-function hide (element) {
-  document.getElementById(element).hidden = true;
 }
 
 function disableMintForms () {
@@ -216,10 +224,12 @@ async function handleCheckAura (e) {
   e.preventDefault();
   const formData = new FormData(e.target);
   tokenAddress = formData.get('address');
-  tokenId = formData.get('id');
+  tokenId = parseInt(formData.get('id').trim());
   await fetchMetadata();
   await readAura();
   setGuiAura();
+  document.getElementById("display").style.display = "flex";
+  hide("gui");
   return watchAura();
 }
 
@@ -318,4 +328,5 @@ export function init () {
   onSubmit("transfer-tokens", handleTransferTokens);
   onSubmit("other-actions-tokens", handleActionsTokens);
   onSubmit("check-aura", handleCheckAura);
+  document.getElementById("aura").onclick = leaveAuraDisplay;
 }

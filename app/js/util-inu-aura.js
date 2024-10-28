@@ -1,13 +1,10 @@
-/* global BigInt, FormData */
-
 import {
   http,
   createPublicClient,
   createWalletClient,
   custom,
   erc20Abi,
-  erc721Abi,
-  getContract
+  erc721Abi
 } from 'https://esm.sh/viem';
 import { anvil, mainnet } from 'https://esm.sh/viem/chains';
 
@@ -97,7 +94,7 @@ async function readAura () {
       functionName: 'auraOf',
       args:[ tokenAddress, tokenId ],
     });
-  } catch (e) {
+  } catch () {
     // Ignore expected failures.
   }
   setGuiAura();
@@ -256,7 +253,7 @@ async function handleTransferTokens (e) {
   e.preventDefault();
   const symbol = e.submitter.name;
   const formData = new FormData(e.target);
-  const address = formdata.get("address");
+  const address = formData.get("address");
   const amount = formData.get('amount');
   e.target.elements["amount"].value = "";
   return writeTransfer(symbol, amount, address);
@@ -273,6 +270,7 @@ async function handleActionsTokens (e) {
     break;
   case "burn-util":
     return writeBurnUtilForInu(amount);
+    break;
   default:
     return null;
   }

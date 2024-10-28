@@ -46,14 +46,21 @@ contract Deploy is Script {
             aura.setErc6551RegistryAddress(address(registry));
             DummyERC721 nft = new DummyERC721(msg.sender);
 
-            nft.mint(address(this), 1);
+            nft.mint(
+                address(this),
+                1,
+                "ipfs://QmcytekE6LeYqCnrr9pj5eHnqgKTV6HYAgM4G4t3GRPd4s/metadata.json"
+            );
             address nftAccount = registry.createAccount(
                 address(nft),
                 1
             );
 
             uint256 amount = 707 * 999999999999;
-            util.mint(msg.sender, amount);
+            util.mint(
+                msg.sender,
+                amount
+            );
             util.approve(address(inu), amount);
             inu.burnUtilForInu(amount);
 
@@ -61,13 +68,13 @@ contract Deploy is Script {
             aura.mint(nftAccount, 1);
 
             console2.log("======> TEST NFT: %s %d", address(nft), 1);
+            console2.log("======> AURA: %d", aura.auraOf(address(nft), 1));
             console2.log(
                 "======> UTIL: %s INU: %s AURA: %s",
                 util.balanceOf(nftAccount),
                 inu.balanceOf(nftAccount),
                 aura.balanceOf(nftAccount)
             );
-            console2.log("======> AURA: %d", aura.auraOf(address(nft), 1));
         }
 
         vm.stopBroadcast();

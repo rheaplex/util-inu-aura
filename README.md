@@ -10,6 +10,8 @@ AURA: The aura of art - its presence, cultural cachet, or specialness.
 
 Uses code from https://github.com/tokenbound/contracts .
 
+Uses sound from https://freesound.org/people/magnuswaker/sounds/581166/
+
 # Development
 
 ## Run Tests

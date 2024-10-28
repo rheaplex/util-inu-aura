@@ -1,3 +1,5 @@
+/* global BigInt, FormData */
+
 import {
   http,
   createPublicClient,
@@ -42,6 +44,7 @@ let tokenId;
 let metadata;
 let imgUrl;
 let aura;
+let auraSound;
 let unwatchAuraFun;
 let balanceIntervalId;
 
@@ -186,8 +189,10 @@ function setGuiAura () {
   }
   if (imgUrl && aura) {
     document.getElementById("aura").classList.add('img-aura');
+    auraSound.play();
   } else {
     document.getElementById("aura").classList.remove('img-aura');
+    auraSound.pause();
   }
 }
 
@@ -201,6 +206,7 @@ async function leaveAuraDisplay () {
   metadata = null;
   imgUrl = null;
   aura = null;
+  auraSound.pause();
   return unwatchAura();
 }
 
@@ -322,6 +328,8 @@ export function init () {
     chain,
     transport: custom(window.ethereum),
   });
+  auraSound = new Audio("./resources/aura.ogg");
+  auraSound.loop = true;
   onSubmit("connect-address", handleConnectAddress);
   onSubmit("disconnect-address", handleDisconnectAddress);
   onSubmit("mint-tokens", handleMintTokens);

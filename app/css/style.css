@@ -17,22 +17,44 @@
 
 .token-image {
     width: 90vmin;
-    border-radius: 4%;
-    border: auto;
 }
 
 .img-aura {
-    background-color: #fff;
+    background: rgba(1, 1, 1, 0);
     box-shadow: 0 0 100% 100% #0ff;
-    animation: 1s linear 0s infinite alternate animate-aura;
+    animation:  31s linear 0s infinite normal animate-aura;
 }
 
 @keyframes animate-aura {
-    from {
-        box-shadow: 0 0 140px 90px #fff;
+    0% {
+        box-shadow: 0 0 10vmin 8vmin #f00;
     }
 
-    to {
-        box-shadow: 0 0 140px 90px #0ff;
+    17% {
+        box-shadow: 0 0 10vmin 9vmin #f7b;
+    }
+
+    33% {
+        box-shadow: 0 0 10vmin 8vmin #ff0;
+    }
+
+    49% {
+        box-shadow: 0 0 10vmin 11vmin #0f0;
+    }
+
+    65% {
+        box-shadow: 0 0 10vmin 10vmin #0ff;
+    }
+
+    82% {
+        box-shadow: 0 0 10vmin 12vmin #00f;
+    }
+
+    90% {
+        box-shadow: 0 0 10vmin 11vmin #808;
+    }
+
+    100% {
+        box-shadow: 0 0 10vmin 8vmin #f00;
     }
 }

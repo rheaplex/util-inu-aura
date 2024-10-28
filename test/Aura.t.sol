@@ -47,7 +47,11 @@ contract AuraTest is Test {
 
     function testAuraOf() public {
         uint256 amount = 707 * 999999999999;
-        nft.mint(address(this), 1);
+        nft.mint(
+            address(this),
+            1,
+            "ipfs://QmcytekE6LeYqCnrr9pj5eHnqgKTV6HYAgM4G4t3GRPd4s/metadata.json"
+        );
         address nftAccount = registry.createAccount(
             address(nft),
             1

@@ -66,8 +66,7 @@ contract Deploy is Script {
 
             inu.transfer(nftAccount, inu.balanceOf(msg.sender));
             aura.mint(nftAccount, 1);
-
-            console2.log("======> TEST NFT: %s %d", address(nft), 1);
+            console2.log("======> TEST NFT 1: %s %d", address(nft), 1);
             console2.log("======> AURA: %d", aura.auraOf(address(nft), 1));
             console2.log(
                 "======> UTIL: %s INU: %s AURA: %s",
@@ -75,6 +74,13 @@ contract Deploy is Script {
                 inu.balanceOf(nftAccount),
                 aura.balanceOf(nftAccount)
             );
+
+            nft.mint(
+                address(this),
+                2,
+                "ipfs://QmVksLULmWtShCXbj5q12RX4KNdHEFkKEnAJmybAhPES45/metadata.json"
+            );
+            console2.log("======> TEST NFT 2: %s %d", address(nft), 2);
         }
 
         vm.stopBroadcast();

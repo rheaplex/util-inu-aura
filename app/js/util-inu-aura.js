@@ -90,12 +90,16 @@ async function readBalance (symbol) {
 
 async function readAura () {
   const chainId = await publicClient.getChainId();
-  aura = await publicClient.readContract({
-    abi: auraAbi,
-    address: auraAddress[chainId],
-    functionName: 'auraOf',
-    args:[ tokenAddress, tokenId ],
-  });
+  try {
+    aura = await publicClient.readContract({
+      abi: auraAbi,
+      address: auraAddress[chainId],
+      functionName: 'auraOf',
+      args:[ tokenAddress, tokenId ],
+    });
+  } catch (e) {
+    // Ignore expected failures.
+  }
   setGuiAura();
 }
 

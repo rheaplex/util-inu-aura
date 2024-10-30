@@ -94,7 +94,7 @@ async function readAura () {
       functionName: 'auraOf',
       args:[ tokenAddress, tokenId ],
     });
-  } catch () {
+  } catch (e) {
     // Ignore expected failures.
   }
   setGuiAura();
@@ -182,9 +182,10 @@ function setWalletAddress (address) {
     .forEach(element => element.innerHTML = walletAddress || "—");
 }
 
-function setGuiAura () {
+async function setGuiAura () {
   if (imgUrl) {
     document.getElementById("aura").src = imgUrl;
+    await document.getElementById("aura").decode();
   } else {
     document.getElementById("aura").src = undefined;
   }
@@ -234,7 +235,7 @@ async function handleCheckAura (e) {
   tokenId = parseInt(formData.get('id').trim());
   await fetchMetadata();
   await readAura();
-  setGuiAura();
+  await setGuiAura();
   document.getElementById("display").style.display = "flex";
   hide("gui");
   return watchAura();
@@ -339,4 +340,12 @@ export function init () {
   onSubmit("other-actions-tokens", handleActionsTokens);
   onSubmit("check-aura", handleCheckAura);
   document.getElementById("aura").onclick = leaveAuraDisplay;
+  const params = new URLSearchParams(window.location.search);
+  const paramContract = params.get("contract");
+  const paramId = params.get("id");
+  if (paramContract && paramId) {
+    document.getElementById("display-token-address").value = paramContract;
+    document.getElementById("display-token-id").value = paramId;
+    document.getElementById("display-token-button").click();
+  }
 }

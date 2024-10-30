@@ -6,6 +6,14 @@ INU: A measure of inutility - the waste, denial, or absence of utility.
 
 AURA: The aura of art - its presence, cultural cachet, or specialness.
 
+# Displaying a Single NFT
+
+You can pass the NFT's `contract` address and token `id` as query parameters to the app, e.g.:
+
+    app?contract=0xa513E6E4b8f2a923D98304ec87F64353C4D5C853&id=1
+
+Note that you will need to approve the sound autoplay using this method if you wish to hear it.
+
 # Notes
 
 Uses code from https://github.com/tokenbound/contracts .

@@ -8,6 +8,8 @@ import {
 } from 'https://esm.sh/viem';
 import { anvil, mainnet } from 'https://esm.sh/viem/chains';
 
+import { VFX } from "https://esm.sh/@vfx-js/core";
+
 import {
   utilAddress, inuAddress, auraAddress,
   utilAbi, inuAbi, auraAbi
@@ -42,6 +44,7 @@ let metadata;
 let imgUrl;
 let aura;
 let auraSound;
+let auraVfx = null;
 let unwatchAuraFun;
 let balanceIntervalId;
 
@@ -190,17 +193,27 @@ async function setGuiAura () {
     document.getElementById("aura").src = undefined;
   }
   if (imgUrl && aura) {
-    document.getElementById("aura").classList.add('img-aura');
     auraSound.play();
+    auraVfx = new VFX();
+    auraVfx.add(
+      document.getElementById("aura"),
+      { shader: "rgbShift", overflow: true }
+    );
   } else {
-    document.getElementById("aura").classList.remove('img-aura');
+    auraVfx.remove(document.getElementById("aura"));
+    auraVfx.destroy();
+    auraVfx = null;
     auraSound.pause();
   }
 }
 
 async function leaveAuraDisplay () {
   document.getElementById("aura").src = undefined;
-  document.getElementById("aura").classList.remove('img-aura');
+  if (auraVfx) {
+    auraVfx.remove(document.getElementById("aura"));
+    auraVfx.destroy();
+    auraVfx = null;
+  }
   show("gui");
   hide("display");
   tokenAddress = null;

@@ -67,7 +67,6 @@ contract Deploy is Script {
             inu.transfer(nftAccount, inu.balanceOf(msg.sender));
             aura.mint(nftAccount, 1);
             console2.log("======> TEST NFT 1: %s %d", address(nft), 1);
-            console2.log("======> AURA: %d", aura.auraOf(address(nft), 1));
             console2.log(
                 "======> UTIL: %s INU: %s AURA: %s",
                 util.balanceOf(nftAccount),

@@ -98,7 +98,7 @@ async function readAura () {
       args:[ tokenAddress, tokenId ],
     });
   } catch (e) {
-    // Ignore expected failures.
+    console.log(e);
   }
   setGuiAura();
 }
@@ -278,16 +278,16 @@ async function handleActionsTokens (e) {
   const formData = new FormData(e.target);
   const amount = formData.get('amount');
   e.target.elements["amount"].value = "";
+  let result = null;
   switch (e.submitter.name) {
   case "approve-util":
-    return writeApproveUtils(amount);
+    result = writeApproveUtils(amount);
     break;
   case "burn-util":
-    return writeBurnUtilForInu(amount);
+    result = writeBurnUtilForInu(amount);
     break;
-  default:
-    return null;
   }
+  return result;
 }
 
 async function handleConnectAddress (e) {

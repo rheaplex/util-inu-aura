@@ -44,14 +44,14 @@ This is anvil's local account 0 key.
 
 ## Deploy to Mainnet
 
-export MAINNET_RPC_URL="xxx"
-export ETHERSCAN_KEY="xxx"
-export SENDER_ADDRESS="xxx"
-export DERIVATION_PATH="xxx"
+    export MAINNET_RPC_URL="xxx"
+    export ETHERSCAN_KEY="xxx"
+    export SENDER_ADDRESS="xxx"
+    export DERIVATION_PATH="xxx"
 
-forge script script/Deploy.s.sol:Deploy \
-    --rpc-url "${MAINNET_RPC_URL}" \
-    --etherscan-api-key "${ETHERSCAN_KEY}" \
-    --sender "${SENDER_ADDRESS}" \
-    --mnemonic-derivation-paths "${DERIVATION_PATH}" \
-    --trezor --broadcast --verify -vvvv
+    forge script script/Deploy.s.sol:Deploy \
+        --rpc-url "${MAINNET_RPC_URL}" \
+        --etherscan-api-key "${ETHERSCAN_KEY}" \
+        --sender "${SENDER_ADDRESS}" \
+        --mnemonic-derivation-paths "${DERIVATION_PATH}" \
+        --trezor --broadcast --verify -vvvv
